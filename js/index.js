@@ -1,0 +1,1 @@
+var Figure = require('./figure');
