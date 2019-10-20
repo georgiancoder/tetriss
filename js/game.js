@@ -1,9 +1,12 @@
+import {Figure} from "./figure";
+
 export class Game {
     constructor(){
         this.fps = 1;
         this.score = 0;
         this.isPlaying = true;
         this.gameHtml = '';
+        this.timeStamp;
         this.gameArea = [
             ['#','#','#','#','#','#','#','#','#','#'],
             ['#','0','0','0','0','0','0','0','0','#'],
@@ -16,7 +19,9 @@ export class Game {
             ['#','0','0','0','0','0','0','0','0','#'],
             ['#','#','#','#','#','#','#','#','#','#']
         ];
-        this.garbage = [...this.gameArea];
+        this.snapShot = [...this.gameArea];
+        this.activeFigure = new Figure([[1]]);
+        this.playerY;
     }
 
     loop(timeStamp){
@@ -41,7 +46,11 @@ export class Game {
     }
     
     update(timeStamp){
-
+        if (this.activeFigure.Y === this.playerY) {
+            // create new figure & update snapShot
+        }
         this.render();
+        // save player Y position for checking game's next tick; if position is the same create new figure
+        this.playerY = this.activeFigure.Y;
     }
 }
