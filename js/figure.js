@@ -40,8 +40,39 @@ export class Figure {
         return gameArea;
     }
 
-    canMoveDown(){
+    getFigureCoordsAtPosition(figure, y,x){
+        let coords = [];
+        figure.forEach((row,rowIndex)=>{
+            row.forEach((cell,cellIndex)=> {
+                if(figure[rowIndex][cellIndex] > 0){
+                    coords.push([y+rowIndex,x+cellIndex]);
+                }
+            });
+        });
+        return coords;
+    }
 
+    canMoveDown(gameArea){
+        let canMove = true;
+        let onlyFigure = this.getFigureFromMatrix();
+        let nextPosCoords = this.getFigureCoordsAtPosition(onlyFigure,this.Y+1,this.X);
+        let currPosCoords = this.getFigureCoordsAtPosition(onlyFigure,this.Y,this.X);
+
+        let nextPosAvailCoords = nextPosCoords.filter(c => {
+            let includes = currPosCoords.find(arr=>JSON.stringify(c) == JSON.stringify(arr));
+            if(!includes) {
+                return true;
+            }
+        });
+        if((this.Y+1) > gameArea.length){
+            canMove = false;
+        }
+        nextPosAvailCoords.forEach(coord =>{
+            if(coord[0] > 0 && (!gameArea[coord[0]] || (gameArea[coord[0]][coord[1]] > 0))){
+                canMove = false;
+            }
+        });
+        return canMove;
     }
     canMoveLeft(){
 

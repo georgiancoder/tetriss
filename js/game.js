@@ -23,7 +23,7 @@ export class Game {
             [0,8,8],
             [0,0,8]
         ]);
-        this.playerY = 0;
+        this.playerY = null;
     }
 
     loop(timeStamp){
@@ -50,13 +50,22 @@ export class Game {
     update(timeStamp){
         if (this.activeFigure.Y === this.playerY) {
             // create new figure & update snapShot
-
+            this.activeFigure = new Figure([
+                [0,0,0],
+                [8,8,8],
+                [0,0,0]
+            ]);
         }
         this.gameArea = this.activeFigure.drawFigure(this.gameArea,this.snapShot);
-        this.activeFigure.Y++;
+        if (this.activeFigure.canMoveDown(this.gameArea)) {
+            this.activeFigure.Y++;
+        } else {
+            this.snapShot = this.gameArea.map(x => ([...x]));
+            this.playerY = this.activeFigure.Y;
+
+        }
         this.render();
 
         // save player Y position for checking game's next tick; if position is the same create new figure
-        this.playerY = this.activeFigure.Y;
     }
 }
