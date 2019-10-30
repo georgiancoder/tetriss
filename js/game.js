@@ -19,7 +19,7 @@ export class Game {
             ['0','0','0','0','0','0','0','0'],
         ];
         this.snapShot = this.gameArea.map(x => ([...x]));
-        this.activeFigure = new Figure(this.randomFigure());
+        this.activeFigure = new Figure(this.randomFigure(),this.gameArea[0].length);
         this.playerY = null;
     }
 
@@ -51,7 +51,7 @@ export class Game {
     update(timeStamp){
         if (this.activeFigure.Y === this.playerY) {
             // create new figure & update snapShot
-            this.activeFigure = new Figure(this.randomFigure());
+            this.activeFigure = new Figure(this.randomFigure(),this.gameArea[0].length);
         }
         this.gameArea = this.activeFigure.drawFigure(this.gameArea,this.snapShot);
         if (this.activeFigure.canMoveDown(this.gameArea)) {

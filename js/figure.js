@@ -1,12 +1,20 @@
 export class Figure {
-    constructor(figure){
+    constructor(figure, areaWidth){
         this.figure = figure;
-        this.X = Math.round(this.getFigureFromMatrix()[0].length / 2);
+        this.X = Math.round((areaWidth/2) - (this.getFigureWidth(this.getFigureFromMatrix()) / 2));
         this.Y = -this.getFigureFromMatrix().length;
     }
 
-    getFigureSize(figure){
-        return {width: figure[0].length, height: figure.length}
+    getFigureWidth(figure){
+        let width = 0;
+        figure.forEach(row=>{
+            row.forEach((cell,cellIndex)=>{
+               if (cell > 0 && cellIndex + 1 > width) {
+                   width = cellIndex + 1;
+               }
+            });
+        });
+        return width;
     }
 
     getFigureFromMatrix(){
