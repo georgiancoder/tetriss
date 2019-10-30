@@ -1,4 +1,5 @@
 import {Figure} from "./figure";
+import { Figures } from './figures';
 
 export class Game {
     constructor(){
@@ -18,12 +19,12 @@ export class Game {
             ['0','0','0','0','0','0','0','0'],
         ];
         this.snapShot = this.gameArea.map(x => ([...x]));
-        this.activeFigure = new Figure([
-            [0,0,8],
-            [0,8,8],
-            [0,0,8]
-        ]);
+        this.activeFigure = new Figure(this.randomFigure());
         this.playerY = null;
+    }
+
+    randomFigure(){
+        return Figures[Math.floor(Math.random() * Figures.length)];
     }
 
     loop(timeStamp){
@@ -50,11 +51,7 @@ export class Game {
     update(timeStamp){
         if (this.activeFigure.Y === this.playerY) {
             // create new figure & update snapShot
-            this.activeFigure = new Figure([
-                [0,0,0],
-                [8,8,8],
-                [0,0,0]
-            ]);
+            this.activeFigure = new Figure(this.randomFigure());
         }
         this.gameArea = this.activeFigure.drawFigure(this.gameArea,this.snapShot);
         if (this.activeFigure.canMoveDown(this.gameArea)) {
@@ -62,10 +59,8 @@ export class Game {
         } else {
             this.snapShot = this.gameArea.map(x => ([...x]));
             this.playerY = this.activeFigure.Y;
-
         }
         this.render();
 
-        // save player Y position for checking game's next tick; if position is the same create new figure
     }
 }
