@@ -60,11 +60,16 @@ export class Figure {
         return coords;
     }
 
-    canMoveDown(gameArea){
+    canMove(gameArea, axis, direction){
         let canMove = true;
         let onlyFigure = this.getFigureFromMatrix();
-        let nextPosCoords = this.getFigureCoordsAtPosition(onlyFigure,this.Y+1,this.X);
+        let nextPosCoords;
         let currPosCoords = this.getFigureCoordsAtPosition(onlyFigure,this.Y,this.X);
+        if(axis == 'Y'){
+            nextPosCoords = this.getFigureCoordsAtPosition(onlyFigure,this.Y+direction,this.X);
+        } else if(axis == 'X') {
+            nextPosCoords = this.getFigureCoordsAtPosition(onlyFigure,this.Y,this.X+direction);
+        }
 
         let nextPosAvailCoords = nextPosCoords.filter(c => {
             let includes = currPosCoords.find(arr=>JSON.stringify(c) == JSON.stringify(arr));
@@ -82,16 +87,7 @@ export class Figure {
         });
         return canMove;
     }
-    canMoveLeft(){
-
-    }
-    canMoveRight(){
-
-    }
     canRotate(){
-
-    }
-    moveDown(){
 
     }
     moveLeft(){

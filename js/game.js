@@ -54,7 +54,7 @@ export class Game {
             this.activeFigure = new Figure(this.randomFigure(),this.gameArea[0].length);
         }
         this.gameArea = this.activeFigure.drawFigure(this.gameArea,this.snapShot);
-        if (this.activeFigure.canMoveDown(this.gameArea)) {
+        if (this.activeFigure.canMove(this.gameArea,'Y',1)) {
             this.activeFigure.Y++;
         } else {
             this.snapShot = this.gameArea.map(x => ([...x]));
