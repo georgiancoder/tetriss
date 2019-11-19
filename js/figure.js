@@ -80,11 +80,20 @@ export class Figure {
         if((this.Y+1) > gameArea.length){
             canMove = false;
         }
-        nextPosAvailCoords.forEach(coord =>{
-            if(coord[0] > 0 && (!gameArea[coord[0]] || (gameArea[coord[0]][coord[1]] > 0))){
-                canMove = false;
-            }
-        });
+        if(axis == 'Y'){
+            nextPosAvailCoords.forEach(coord =>{
+                if(!gameArea[coord[0]] || (gameArea[coord[0]][coord[1]] > 0)){
+                    canMove = false;
+                }
+            });
+        } else if(axis == 'X') {
+            nextPosAvailCoords.forEach(coord =>{
+                if(gameArea[coord[1]] < 0 || gameArea[coord[1]] > gameArea[0].length || (gameArea[coord[0]][coord[1]] > 0)){
+                    canMove = false;
+                }
+            });
+        }
+        
         return canMove;
     }
     canRotate(){
